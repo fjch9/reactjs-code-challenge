@@ -36,11 +36,6 @@ class PostItem extends Component {
         </button>
 
         {this.state.toggle && <CommentsList id={this.props.post.id} />}
-
-        {/* {this.props.comments.length > 0 && this.state.toggle && <div>WIP</div>}
-        {this.props.comments.length === 0 && this.state.toggle && (
-          <div> - No recent Activity - </div>
-        )} */}
       </div>
     );
   }
