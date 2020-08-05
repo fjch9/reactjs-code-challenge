@@ -14,7 +14,6 @@ class CommentForm extends Component {
       body: ""
     };
 
-    console.log(props);
     this.toggleModal = this.toggleModal.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -24,6 +23,7 @@ class CommentForm extends Component {
     this.setState({
       toggle: !this.state.toggle
     });
+    this.props.closedModal();
   }
 
   onChange(e) {
@@ -33,15 +33,16 @@ class CommentForm extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const post = {
-      title: this.state.title,
+    const comment = {
+      postId: this.props.postId,
+      id: this.props.idx,
+      name: this.state.title,
       email: this.state.email,
       body: this.state.body
     };
 
-    console.log("pushed", post);
-
-    // this.props.createPost(post);
+    this.props.createComment({ comment });
+    this.toggleModal();
   }
 
   render() {

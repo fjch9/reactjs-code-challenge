@@ -27,14 +27,13 @@ class CommentsList extends Component {
     return (
       <div className="comment-list">
         <div className="list-group">
-          {/* {this.props.comments.length > 0 &&
-          this.props.comments.map((comment, idx) => (
-            <Comment key={idx} comment={comment} />
-          ))} */}
+          {this.props.comments.length > 0 &&
+            this.props.comments.map((comment, idx) => (
+              <Comment key={idx} comment={comment} />
+            ))}
           {this.props.comments.length === 0 && (
             <div className="list-group-item">No recent activity</div>
           )}
-          <div className="list-group-item">No recent activity</div>
         </div>
         <button
           type=" button"
@@ -43,11 +42,14 @@ class CommentsList extends Component {
         >
           Add Comment
         </button>
-        {/* <Modal isOpen={this.state.toggle} toggle={this.toggleModal}> */}
         {this.state.toggle === true && (
-          <CommentForm toggle={this.state.toggle} />
+          <CommentForm
+            postId={this.props.id}
+            idx={this.props.comments.length + 1}
+            toggle={this.state.toggle}
+            closedModal={this.toggleModal}
+          />
         )}
-        {/* </Modal> */}
       </div>
     );
   }

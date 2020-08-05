@@ -12,10 +12,10 @@ export const fetchComments = ({ id }) => dispatch => {
     );
 };
 
-export const createComment = commentData => {
+export const createComment = comment => {
   console.log("saving comment...");
   return {
     type: NEW_COMMENT,
-    payload: commentData
+    payload: comment
   };
 };

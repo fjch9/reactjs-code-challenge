@@ -15,7 +15,7 @@ export default function(state = initialState, { type, payload }) {
     case NEW_COMMENT:
       return {
         ...state,
-        items: [...state.comments, payload.commentData]
+        items: [...state.items, payload.comment]
       };
     default:
       return state;
