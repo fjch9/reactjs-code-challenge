@@ -8,7 +8,8 @@ class PostItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggle: false
+      toggle: false,
+      modalToggle: false
     };
     this.toggleComments = this.toggleComments.bind(this);
   }
@@ -21,7 +22,7 @@ class PostItem extends Component {
     return (
       <div
         className="list-group-item list-group-item-action"
-        onClick={this.toggleComments}
+        // onClick={this.toggleComments}
       >
         <div className="d-flex w-100 justify-content-between">
           <h5 className="mb-1">{this.props.post.title}</h5>
@@ -34,7 +35,6 @@ class PostItem extends Component {
         >
           {this.state.toggle ? "Hide Comments" : "View Comments"}
         </button>
-
         {this.state.toggle && <CommentsList id={this.props.post.id} />}
       </div>
     );
