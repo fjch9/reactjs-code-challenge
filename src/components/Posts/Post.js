@@ -2,20 +2,27 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchComments } from "../../../src/redux/actions/commentsActions";
+import CommentsList from "../Comments/CommentsList";
 
 class PostItem extends Component {
   constructor(props) {
     super(props);
-    this.loadComments = this.loadComments.bind(this);
+    this.state = {
+      toggle: false
+    };
+    this.toggleComments = this.toggleComments.bind(this);
   }
 
-  loadComments() {
-    console.log(this.props.post.id);
-    this.props.fetchComments({ id: this.props.post.id });
+  toggleComments() {
+    this.setState({ toggle: !this.state.toggle });
   }
+
   render() {
     return (
-      <div className="list-group-item list-group-item-action">
+      <div
+        className="list-group-item list-group-item-action"
+        onClick={this.toggleComments}
+      >
         <div className="d-flex w-100 justify-content-between">
           <h5 className="mb-1">{this.props.post.title}</h5>
         </div>
@@ -23,12 +30,17 @@ class PostItem extends Component {
         <button
           type="button"
           className="btn btn-outline-primary btn-sm"
-          onClick={this.loadComments}
+          onClick={this.toggleComments}
         >
-          View Comments
+          {this.state.toggle ? "Hide Comments" : "View Comments"}
         </button>
 
-        {this.props.comments.length > 0 && <div>WIP</div>}
+        {this.state.toggle && <CommentsList id={this.props.post.id} />}
+
+        {/* {this.props.comments.length > 0 && this.state.toggle && <div>WIP</div>}
+        {this.props.comments.length === 0 && this.state.toggle && (
+          <div> - No recent Activity - </div>
+        )} */}
       </div>
     );
   }
