@@ -1,22 +1,34 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchComments } from "../../../src/redux/actions/commentsActions";
+import { fetchCommentsById } from "../../../src/redux/actions/commentsActions";
 import Comment from "./Comment";
-import { Modal } from "reactstrap";
 import CommentForm from "./CommentForm";
 class CommentsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggle: false
+      toggle: false,
+      comments: []
     };
     this.toggleModal = this.toggleModal.bind(this);
   }
   componentWillMount() {
-    this.props.fetchComments({ id: this.props.id });
+    this.fetchCommentsById();
   }
 
+  componentDidUpdate(prevProps) {
+    //check for new changes in the store to update the local state, and update the ui elements
+    if (prevProps.comments !== this.props.comments) {
+      this.fetchCommentsById();
+    }
+  }
+
+  fetchCommentsById() {
+    this.setState({
+      comments: this.props.comments.filter(x => x.postId == this.props.id)
+    });
+  }
   toggleModal() {
     this.setState({
       toggle: !this.state.toggle
@@ -27,11 +39,11 @@ class CommentsList extends Component {
     return (
       <div className="comment-list">
         <div className="list-group">
-          {this.props.comments.length > 0 &&
-            this.props.comments.map((comment, idx) => (
+          {this.state.comments.length > 0 &&
+            this.state.comments.map((comment, idx) => (
               <Comment key={idx} comment={comment} />
             ))}
-          {this.props.comments.length === 0 && (
+          {this.state.comments.length === 0 && (
             <div className="list-group-item">No recent activity</div>
           )}
         </div>
@@ -56,12 +68,12 @@ class CommentsList extends Component {
 }
 
 CommentsList.propTypes = {
-  fetchComments: PropTypes.func.isRequired,
-  comments: PropTypes.array.isRequired
+  fetchCommentsById: PropTypes.func.isRequired
+  // comments: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   comments: state.comments.items
 });
 
-export default connect(mapStateToProps, { fetchComments })(CommentsList);
+export default connect(mapStateToProps, { fetchCommentsById })(CommentsList);

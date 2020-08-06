@@ -1,3 +1,4 @@
 export const FETCH_POSTS = "FETCH_POSTS";
 export const FETCH_COMMENTS = "FETCH_COMMENTS";
+export const FETCH_COMMENTS_BY_ID = "FETCH_COMMENTS_BY_ID";
 export const NEW_COMMENT = "NEW_COMMENT";
